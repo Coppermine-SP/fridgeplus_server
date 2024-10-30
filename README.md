@@ -6,13 +6,16 @@
 ### Table of Content
   - [Overview](#overview)
   - [API Documentation](#api-documentation)
-  - [How to Use](#how-to-use)
+  - [Configurations](#configurations)
   - [Dependencies](#dependencies)
 
 ## Overview
 
 ## API Documentation
 
-## How to Use
+## Configurations
 
 ## Dependencies
+- **Microsoft.EntityFrameworkCore** - 9.0.0
+- **Microsoft.VisualStudio.Azure.Containers.Tools.Targets** - 1.21.0
+- **MySql.EntityFrameworkCore** - 9.0.0
