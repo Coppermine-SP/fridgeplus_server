@@ -25,8 +25,9 @@
 
 ## Dependencies
 - **Microsoft.EntityFrameworkCore** - 9.0.0
+- **Microsoft.EntityFrameworkCore.Tools** - 8.0.0
+- **Microsoft.VisualStudio.Azure.Containers.Tools.Targets** - 1.21.0
 - **Google.Apis.Auth** - 1.68.0
 - **Azure.AI.DocumentIntelligence** - 1.0.0
 - **Azure.AI.OpenAI** - 2.1.0
-- **Microsoft.VisualStudio.Azure.Containers.Tools.Targets** - 1.21.0
 - **MySql.EntityFrameworkCore** - 9.0.0
