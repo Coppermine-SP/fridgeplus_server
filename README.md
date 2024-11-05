@@ -14,10 +14,18 @@
 ## API Documentation
 
 ## Configurations
+**Docker Container를 통해 구동하거나, .NET 9.0 Runtime을 설치하여 직접 구동할 수 있습니다.**
+
+환경 변수로 아래의 옵션을 구성하십시오:
+|환경 변수|설명|
+|-|-|
+|MYSQL_CONNECTION_STRING|MySQL 서버 연결 문자열|
+|AZURE_DOCUMENT_API_KEY|Azure Document Intelligence API 키|
+|AZURE_DOCUMENT_API_ENDPOINT|Azure Document Intelligence API Endpoint|
 
 ## Dependencies
 - **Microsoft.EntityFrameworkCore** - 9.0.0
-- **Microsoft.AspNetCore.Authorization** - 9.0.0
+- **Google.Apis.Auth** - 1.68.0
 - **Azure.AI.DocumentIntelligence** - 1.0.0
 - **Azure.AI.OpenAI** - 2.1.0
 - **Microsoft.VisualStudio.Azure.Containers.Tools.Targets** - 1.21.0
