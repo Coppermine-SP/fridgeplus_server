@@ -62,7 +62,7 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/intelligence/importFromRe
         "itemDescription": "국산 세척 당근",
         "itemQuantity": 1,
     }
-}
+]
 
 
 ```
