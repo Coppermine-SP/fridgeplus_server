@@ -10,6 +10,9 @@
   - [Dependencies](#dependencies)
 
 ## Overview
+- Google JWT를 통한 사용자 인증
+- Azure Document Intelligence + OpenAI Service를 통한 영수증 인식 및 분류
+- Code-First Approach를 통한 데이터베이스 구축
 
 ## API Documentation
 ### 영수증에서 불러오기
@@ -96,7 +99,7 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/intelligence/insight'
 - - -
 
 ### 사용자 인증하기
-Google JWT 토큰으로 현재 세션을 인증합니다.
+Google JWT로 현재 세션을 인증합니다.
 |Method|URL|인증|
 |-|-|-|
 |POST|api/auth/tokenSignIn|false|
