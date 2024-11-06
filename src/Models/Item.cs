@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.Metadata;
 
 namespace fridgeplus_server.Models
 {
@@ -13,8 +14,8 @@ namespace fridgeplus_server.Models
 
         [Required]
         public string ItemOwner { get; set; }
-
         public string? ItemDescription { get; set; }
+        public int ItemQuantity { get; set; }
 
         [Required]
         public DateTime? ItemImportDate { get; set; }

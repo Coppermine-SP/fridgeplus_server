@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using fridgeplus_server.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace fridgeplus_server.Controllers
@@ -7,10 +8,20 @@ namespace fridgeplus_server.Controllers
     [ApiController]
     public class IntelligenceController : ControllerBase
     {
+        private ILogger _logger;
+        private IReceiptRecognizeService _receipt;
+
+        public IntelligenceController(ILogger<IntelligenceController> logger, IReceiptRecognizeService receipt)
+        {
+            _logger = logger;
+            _receipt = receipt;
+        }
+
         [HttpPost]
         public IActionResult ImportFromReceipt(IFormFile image)
         {
-            return Ok();
+            var result = _receipt.ImportFromReceipt(image);
+            return new JsonResult(result);
         }
     }
 }

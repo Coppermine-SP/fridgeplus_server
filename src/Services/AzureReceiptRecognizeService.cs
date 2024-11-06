@@ -1,5 +1,10 @@
-﻿using Azure;
+﻿using System.Configuration.Internal;
+using System.Text;
+using Azure;
 using Azure.AI.DocumentIntelligence;
+using fridgeplus_server.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using MySql.Data.MySqlClient;
 
 namespace fridgeplus_server.Services
 {
@@ -23,6 +28,55 @@ namespace fridgeplus_server.Services
 
             var credential = new AzureKeyCredential(key);
             _client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
+        }
+
+        public List<Item>? ImportFromReceipt(IFormFile image)
+        {
+            string taskId = Guid.NewGuid().ToString().Split('-')[0];
+            _logger.LogInformation($"#{taskId}: New ImportFromReceiptTask.");
+            List<Item> results = new List<Item>();
+            
+            using var stream = image.OpenReadStream();
+            using var ms = new MemoryStream();
+            stream.CopyTo(ms);
+
+            try
+            {
+                _logger.LogInformation($"#{taskId}: Request to Azure API..");
+                var content = new AnalyzeDocumentContent() { Base64Source = BinaryData.FromBytes(ms.ToArray()) };
+                var operation = _client.AnalyzeDocument(WaitUntil.Completed, "prebuilt-receipt", content);
+                var result = operation.Value;
+
+                if (result.Documents.Count == 0)
+                {
+                    _logger.LogWarning($"#{taskId}: Azure api returns no documents!");
+                    throw new Exception();
+                }
+                var document = result.Documents[0];
+
+                foreach (var item in document.Fields["Items"].ValueList)
+                {
+                    var x = item.ValueDictionary;
+                    if(!x.Keys.Contains("Description") || !x.ContainsKey("Quantity")) continue;
+                    string description = x["Description"].Content;
+                    string quantity = x["Quantity"].Content;
+
+                    results.Add(new Item()
+                    {
+                        ItemDescription = description,
+                        ItemQuantity = Int32.Parse(quantity)
+                    });
+                }
+                _logger.LogInformation($"#{taskId}: Complete.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"#{taskId}: Exception in ImportFromReceipt: " + e.ToString());
+                return null;
+            }
+
+            return results;
+
         }
     }
 }
