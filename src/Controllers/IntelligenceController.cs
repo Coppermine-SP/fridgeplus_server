@@ -1,4 +1,5 @@
 ﻿using fridgeplus_server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace fridgeplus_server.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult ImportFromReceipt(IFormFile image)
         {
             var result = _receipt.ImportFromReceipt(image);
