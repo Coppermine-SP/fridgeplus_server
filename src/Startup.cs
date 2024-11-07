@@ -1,10 +1,17 @@
+/*
+    Startup.cs - fridgeplus_server
+    Copyright (C) 2024-2025 Coppermine-SP
+
+    See this repository on GitHub: Coppermine-SP/fridgeplus_server
+ */
+
 using fridgeplus_server.Context;
 using fridgeplus_server.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace fridgeplus_server
 {
-    public class Program
+    public class Startup
     {
         public static void Main(string[] args)
         {
@@ -24,7 +31,7 @@ namespace fridgeplus_server
                     return Task.CompletedTask;
                 };
 
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
                 options.SlidingExpiration = true;
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SameSite = SameSiteMode.Strict;
