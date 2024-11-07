@@ -15,16 +15,18 @@
 - Code-First Approach를 통한 데이터베이스 구축
 
 ## API Documentation
-
 ### Table of Content
 - **IntelligenceController**
+  
     - [영수증에서 불러오기](#영수증에서-불러오기)
     - [요리 추천하기](#요리-추천하기)
 - **FridgeController**
+  
     - [아이템 가져오기](#아이템-가져오기)
     - [아이템 추가하기](#아이템-추가하기)
     - [아이템 삭제하기](#아이템-삭제하기)
 - **AuthenticationController**
+  
     - [사용자 인증하기](#사용자-인증하기)
     - [사용자 정보 가져오기](#사용자-정보-가져오기)
     - [로그아웃 하기](#로그아웃-하기)
