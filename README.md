@@ -124,6 +124,30 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/auth/' \
 
 - - -
 
+### 사용자 정보 가져오기
+현재 세션에 로그인 된 사용자 정보를 가져옵니다.
+|Method|URL|인증|
+|-|-|-|
+|GET|api/auth/accountInfo|true|
+
+#### 요청
+**파라미터 없음**
+```bash
+curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/auth/accountInfo'
+```
+
+### 응답
+**Json Object**
+|Key|Type|Value|
+|-|-|-|
+|sub|string|사용자 고유 ID|
+|name|string|사용자 이름|
+
+```json
+{"sub":"101433903511515263273","name":"Coppermine"}
+```
+
+- - -
 
 ## Configurations
 **Docker Container를 통해 구동하거나, .NET 8.0 Runtime을 설치하여 직접 구동할 수 있습니다.**
