@@ -69,5 +69,13 @@ namespace fridgeplus_server.Controllers
 
             return new JsonResult(new Account(sid, name));
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult SignOut()
+        {
+            HttpContext.SignOutAsync();
+            return Ok();
+        }
     }
 }
