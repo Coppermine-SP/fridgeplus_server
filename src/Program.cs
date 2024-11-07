@@ -15,6 +15,7 @@ namespace fridgeplus_server
             builder.Services.AddAuthorization();
             builder.Services.AddDbContext<ServerDbContext>();
             builder.Services.AddSingleton(typeof(IReceiptRecognizeService), typeof(AzureReceiptRecognizeService));
+            builder.Services.AddSingleton(typeof(IChatCompletionService), typeof(OpenAIGPTService));
             builder.Services.AddAuthentication().AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
             {
                 options.Events.OnRedirectToLogin = context =>
