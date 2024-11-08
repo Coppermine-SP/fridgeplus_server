@@ -1,15 +1,14 @@
-﻿using System.Net;
-using System.Reflection.Metadata;
+﻿/*
+    AuthenticationController - fridgeplus_server
+    Copyright (C) 2024-2025 Coppermine-SP
+ */
+
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Google.Apis.Auth;
-using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Org.BouncyCastle.Tls;
 
 namespace fridgeplus_server.Controllers
 {
