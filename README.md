@@ -59,7 +59,25 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/intelligence/importFromRe
 |itemQuantity|int|상품 수량|
 |categoryId|int|자동 분류된 카테고리 ID|
 ```json
-{"Items":[{"CategoryId":9,"ItemDescription":"생감(국내산)","ItemQuantity":1}]}
+{
+    "items": [
+        {
+            "categoryId": 8,
+            "itemDescription": "오렌지",
+            "itemQuantity": 1
+        },
+        {
+            "categoryId": 9,
+            "itemDescription": "당근",
+            "itemQuantity": 1
+        },
+        {
+            "categoryId": 8,
+            "itemDescription": "배",
+            "itemQuantity": 1
+        }
+    ]
+}
 ```
 - - -
 ### 요리 추천하기
@@ -204,6 +222,8 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/auth/signOut'
 |MYSQL_CONNECTION_STRING|MySQL 서버 연결 문자열|
 |AZURE_DOCUMENT_API_KEY|Azure Document Intelligence API 키|
 |AZURE_DOCUMENT_API_ENDPOINT|Azure Document Intelligence API Endpoint|
+|OPENAI_API_KEY|OpenAI API 키|
+|OPENAI_API_MODEL|OpenAIGPTService에서 사용할 모델|
 
 ## Dependencies
 - **Microsoft.EntityFrameworkCore** - 8.0.10 
