@@ -10,7 +10,6 @@ namespace fridgeplus_server.Models
         [Required]
         public string? CategoryName { get; set; }
 
-        [Required]
         public TimeSpan? Expires { get; set; }
 
     }
