@@ -4,7 +4,7 @@ namespace fridgeplus_server.Services
 {
     public interface IReceiptRecognizeService
     {
-        public List<Item> ImportFromReceipt(IFormFile image);
+        public List<ReceiptItem> ImportFromReceipt(string taskId, IFormFile image);
     }
 
 }

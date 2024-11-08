@@ -30,11 +30,10 @@ namespace fridgeplus_server.Services
             _client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
         }
 
-        public List<Item>? ImportFromReceipt(IFormFile image)
+        public List<ReceiptItem>? ImportFromReceipt(string taskId, IFormFile image)
         {
-            string taskId = Guid.NewGuid().ToString().Split('-')[0];
             _logger.LogInformation($"#{taskId}: New ImportFromReceiptTask.");
-            List<Item> results = new List<Item>();
+            List<ReceiptItem> results = new List<ReceiptItem>();
             
             using var stream = image.OpenReadStream();
             using var ms = new MemoryStream();
@@ -61,10 +60,11 @@ namespace fridgeplus_server.Services
                     string description = x["Description"].Content;
                     string quantity = x["Quantity"].Content;
 
-                    results.Add(new Item()
+                    results.Add(new ReceiptItem()
                     {
-                        ItemDescription = description,
-                        ItemQuantity = Int32.Parse(quantity)
+                        categoryId = 1,
+                        itemDescription = description,
+                        itemQuantity = Int32.Parse(quantity)
                     });
                 }
                 _logger.LogInformation($"#{taskId}: Complete.");
