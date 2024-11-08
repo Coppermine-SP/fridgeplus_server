@@ -21,7 +21,8 @@
     - [영수증에서 불러오기](#영수증에서-불러오기)
     - [요리 추천하기](#요리-추천하기)
 - **FridgeController**
-  
+
+    - [카테고리 가져오기](#카테고리-가져오기)
     - [아이템 가져오기](#아이템-가져오기)
     - [아이템 추가하기](#아이템-추가하기)
     - [아이템 삭제하기](#아이템-삭제하기)
@@ -58,31 +59,7 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/intelligence/importFromRe
 |itemQuantity|int|상품 수량|
 |categoryId|int|자동 분류된 카테고리 ID|
 ```json
-[
-    {
-        "categoryId": 1,
-        "itemDescription": "호주산 오렌지",
-        "itemQuantity": 1,
-    },
-    {
-        "categoryId": 1,
-        "itemDescription": "저탄소 배",
-        "itemQuantity": 1,
-
-    },
-    {
-        "categoryId": 3,
-        "itemDescription": "국산 포크밸리 삼겹살",
-        "itemQuantity": 1,
-    },
-    {
-        "categoryId": 7,
-        "itemDescription": "국산 세척 당근",
-        "itemQuantity": 1,
-    }
-]
-
-
+{"Items":[{"CategoryId":9,"ItemDescription":"생감(국내산)","ItemQuantity":1}]}
 ```
 - - -
 ### 요리 추천하기
@@ -114,6 +91,37 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/intelligence/insight'
              이 요리는 반찬으로도 좋고, 간단한 한 끼로도 손색이 없습니다."
 }
 ```
+- - -
+### 카테고리 가져오기
+카테고리 정보를 가져옵니다.
+|Method|URL|인증|
+|-|-|-|
+|GET|api/fridge/categoryList|true|
+
+- - -
+
+### 아이템 가져오기
+현재 사용자의 아이템을 모두 가져옵니다.
+|Method|URL|인증|
+|-|-|-|
+|GET|api/fridge/itemList|true|
+
+- - -
+
+### 아이템 추가하기
+아이템을 추가합니다.
+|Method|URL|인증|
+|-|-|-|
+|POST|api/fridge/addItems|true|
+
+- - -
+
+### 아이템 삭제하기
+특정 아이템을 삭제합니다.
+|Method|URL|인증|
+|-|-|-|
+|POST|api/fridge/deleteItem|true|
+
 - - -
 
 ### 사용자 인증하기
