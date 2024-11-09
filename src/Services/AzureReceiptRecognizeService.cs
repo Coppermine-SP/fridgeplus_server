@@ -10,8 +10,8 @@ namespace fridgeplus_server.Services
 {
     public class AzureReceiptRecognizeService : IReceiptRecognizeService
     {
-        private ILogger _logger;
-        private DocumentIntelligenceClient _client;
+        private readonly ILogger _logger;
+        private readonly DocumentIntelligenceClient _client;
         public AzureReceiptRecognizeService(ILogger<AzureReceiptRecognizeService> logger)
         {
             _logger = logger;
@@ -30,10 +30,10 @@ namespace fridgeplus_server.Services
             _client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
         }
 
-        public List<ReceiptItem>? ImportFromReceipt(string taskId, IFormFile image)
+        public IEnumerable<IReceiptRecognizeService.ReceiptItem>? ImportFromReceipt(string taskId, IFormFile image)
         {
             _logger.LogInformation($"#{taskId}: New ImportFromReceiptTask.");
-            List<ReceiptItem> results = new List<ReceiptItem>();
+            List<IReceiptRecognizeService.ReceiptItem>? results = new List<IReceiptRecognizeService.ReceiptItem>();
             
             using var stream = image.OpenReadStream();
             using var ms = new MemoryStream();
@@ -60,12 +60,7 @@ namespace fridgeplus_server.Services
                     string description = x["Description"].Content;
                     string quantity = x["Quantity"].Content;
 
-                    results.Add(new ReceiptItem()
-                    {
-                        categoryId = 1,
-                        itemDescription = description,
-                        itemQuantity = Int32.Parse(quantity)
-                    });
+                    results.Add(new IReceiptRecognizeService.ReceiptItem(0, description, Int32.Parse(quantity)));
                 }
                 _logger.LogInformation($"#{taskId}: Complete.");
             }
