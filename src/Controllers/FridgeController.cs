@@ -3,44 +3,59 @@
     Copyright (C) 2024-2025 Coppermine-SP
  */
 
-
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices.JavaScript;
 using fridgeplus_server.Context;
+using fridgeplus_server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace fridgeplus_server.Controllers
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     [Route("api/fridge/[action]")]
     [ApiController]
-    public class FridgeController : ControllerBase
+    public class FridgeController(ILogger<FridgeController> logger, ServerDbContext context) : ControllerBase
     {
-        private ILogger _logger;
-        private ServerDbContext _dbContext;
-
-        public FridgeController(ILogger<FridgeController> logger, ServerDbContext context)
-        {
-            _logger = logger;
-            _dbContext = context;
-        }
-
+        record CategoryListResult(Category[] categories);
+        record ItemListResult(Item[] items);
+        public record AddItem(int categoryId, string itemDescription, int itemQuantity, DateTime expires);
+        public record AddItemsRequest(AddItem[]? items);
+        
+        private string _getCurrentUserId() => HttpContext.User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value ?? "null";       
+            
         [HttpGet]
         [Authorize]
-        public IActionResult CategoryList()
-        {
-            return Ok();
-        }
+        public IActionResult CategoryList() => new JsonResult(new CategoryListResult(context.Categories.ToArray()));
 
         [HttpGet]
         [Authorize]
         public IActionResult ItemList()
         {
-            return Ok();
+            string uid = _getCurrentUserId();
+            return new JsonResult(new ItemListResult(context.Items.Where(x => x.ItemOwner == uid).OrderBy(x => x.ItemExpireDate).ToArray()));
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddItems()
+        public IActionResult AddItems(AddItemsRequest data)
         {
+            if (data.items is null) return BadRequest("item field should be not null.");
+            foreach (var x in data.items)
+            {
+                context.Items.Add(new Item()
+                {
+                    CategoryId = x.categoryId,
+                    ItemDescription = x.itemDescription,
+                    ItemExpireDate = x.expires,
+                    ItemImportDate = DateTime.Today,
+                    ItemOwner = _getCurrentUserId()
+                });
+            }
+
+            context.SaveChanges();
             return Ok();
         }
 
