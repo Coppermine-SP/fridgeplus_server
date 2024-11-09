@@ -10,9 +10,9 @@ namespace fridgeplus_server.Services
 {
     public class OpenAIGPTService : IChatCompletionService
     {
-        private ILogger _logger;
-        private OpenAIClient _client;
-        private ChatClient _chatClient;
+        private readonly ILogger _logger;
+        private readonly OpenAIClient _client;
+        private readonly ChatClient _chatClient;
         private readonly JsonSerializerOptions _serializerOptions = new JsonSerializerOptions()
         {
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)

@@ -13,7 +13,7 @@ namespace fridgeplus_server.Models
         public int? CategoryId { get; set; }
 
         [Required]
-        public string ItemOwner { get; set; }
+        public string? ItemOwner { get; set; }
         public string? ItemDescription { get; set; }
         public int ItemQuantity { get; set; }
 

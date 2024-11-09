@@ -14,22 +14,15 @@ namespace fridgeplus_server.Controllers
 {
     [Route("api/auth/[action]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController(ILogger<AuthenticationController> logger) : ControllerBase
     {
-        private ILogger _logger;
-
-        public AuthenticationController(ILogger<AuthenticationController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpPost]
         public IActionResult TokenSignIn([FromForm]string token)
         {
             try
             {
                 var payload = GoogleJsonWebSignature.ValidateAsync(token).Result;
-                _logger.LogInformation("Auth Request => " + payload.Subject);
+                logger.LogInformation("Auth Request => " + payload.Subject);
 
                 var identity = new ClaimsIdentity(new[]
                 {
@@ -45,19 +38,19 @@ namespace fridgeplus_server.Controllers
                 return Ok();
 
             }
-            catch (InvalidJwtException e)
+            catch (InvalidJwtException _)
             {
-                _logger.LogWarning("Auth Failed => InvalidJwt: " + token);
+                logger.LogWarning("Auth Failed => InvalidJwt: " + token);
                 return Unauthorized();
             }
             catch (Exception e)
             {
-                _logger.LogWarning("Auth Failed => Exception: " + e.ToString());
+                logger.LogWarning("Auth Failed => Exception: " + e.ToString());
                 return StatusCode(500);
             }
         }
 
-        private record Account(string Sub, string Name);
+        record Account(string Sub, string Name);
 
         [HttpGet]
         [Authorize]
@@ -71,7 +64,7 @@ namespace fridgeplus_server.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult SignOut()
+        public new IActionResult SignOut()
         {
             HttpContext.SignOutAsync();
             return Ok();
