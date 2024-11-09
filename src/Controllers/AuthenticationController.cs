@@ -40,13 +40,19 @@ namespace fridgeplus_server.Controllers
             }
             catch (InvalidJwtException _)
             {
-                logger.LogWarning("Auth Failed => InvalidJwt: " + token);
-                return Unauthorized();
+                logger.LogInformation("Auth Failed => InvalidJwt: " + token);
+                return Unauthorized("Invalid JWT.");
             }
-            catch (Exception e)
+            catch (AggregateException e)
             {
+                if (e.InnerExceptions[0] is Google.Apis.Auth.InvalidJwtException)
+                {
+                    logger.LogInformation("Auth Failed => Expired JWT ");
+                    return BadRequest("Expired JWT.");
+                }
+
                 logger.LogWarning("Auth Failed => Exception: " + e.ToString());
-                return StatusCode(500);
+                return BadRequest("Unknown error");
             }
         }
 
