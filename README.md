@@ -294,7 +294,9 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/auth/' \
 |Code|Description|
 |-|-|
 |200|인증 성공|
-|401|인증 실패|
+|400|인증 실패|
+
+인증 실패시, 이유가 Body에 반환됨.
 
 - - -
 
