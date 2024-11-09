@@ -116,6 +116,61 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/intelligence/insight'
 |-|-|-|
 |GET|api/fridge/categoryList|true|
 
+#### 요청
+**파라미터 없음**
+```bash
+curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/fridge/categoryList'
+```
+
+#### 응답
+**Json Object Array**
+|Key|Type|Value|
+|-|-|-|
+|categoryId|int|카테고리 ID|
+|categoryName|string|카테고리 한국어 이름|
+|expires|ISO-8601 Date 또는 null|권장 유효기간|
+
+```json
+{
+    "categories": [
+        {
+            "categoryId": 7,
+            "categoryName": "기타 신선식품",
+            "expires": null
+        },
+        {
+            "categoryId": 8,
+            "categoryName": "과일",
+            "expires": null
+        },
+        {
+            "categoryId": 9,
+            "categoryName": "채소",
+            "expires": null
+        },
+        {
+            "categoryId": 10,
+            "categoryName": "육류",
+            "expires": null
+        },
+        {
+            "categoryId": 11,
+            "categoryName": "어류",
+            "expires": null
+        },
+        {
+            "categoryId": 12,
+            "categoryName": "유제품",
+            "expires": null
+        },
+        {
+            "categoryId": 13,
+            "categoryName": "반찬",
+            "expires": null
+        }
+    ]
+}
+```
 - - -
 
 ### 아이템 가져오기
@@ -124,6 +179,48 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/intelligence/insight'
 |-|-|-|
 |GET|api/fridge/itemList|true|
 
+#### 요청
+**파라미터 없음**
+```bash
+curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/fridge/itemList'
+```
+#### 응답
+**Json Object Array**
+|Key|Type|Value|
+|-|-|-|
+|itemId|int|아이템 ID|
+|categoryId|int|아이템의 카테고리 ID|
+|itemOwner|string|아이템 소유자 UID|
+|itemDescription|string|이름|
+|itemQuantity|int|수량|
+|itemImportDate|ISO-8601 Date|생성일|
+|itemExpireDate|ISO-8601 Date|만료일|
+
+```json
+{
+    "items": [
+        {
+            "itemId": 2,
+            "categoryId": 9,
+            "itemOwner": "101463908511110268273",
+            "itemDescription": "중국산 사과",
+            "itemQuantity": 1,
+            "itemImportDate": "2024-11-10T00:00:00",
+            "itemExpireDate": "2024-11-11T00:00:00"
+        },
+        {
+            "itemId": 1,
+            "categoryId": 9,
+            "itemOwner": "101463908511110268273",
+            "itemDescription": "씻은 당근",
+            "itemQuantity": 2,
+            "itemImportDate": "2024-11-10T00:00:00",
+            "itemExpireDate": "2024-11-13T00:00:00"
+        }
+    ]
+}
+```
+
 - - -
 
 ### 아이템 추가하기
@@ -131,6 +228,23 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/intelligence/insight'
 |Method|URL|인증|
 |-|-|-|
 |POST|api/fridge/addItems|true|
+
+#### 요청
+**JSON Object Array**
+|Key|Type|Value|
+|-|-|-|
+|categoryId|int|아이템의 카테고리 ID|
+|itemDescription|string|이름|
+|itemQuantity|int|수량|
+|expires|ISO-8601 Date|만료일|
+
+#### 응답
+**HTTP Status Code**
+
+|Code|Description|
+|-|-|
+|200|성공|
+|500|실패|
 
 - - -
 
