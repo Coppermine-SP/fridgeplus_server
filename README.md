@@ -238,6 +238,22 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/fridge/itemList'
 |itemQuantity|int|수량|
 |expires|ISO-8601 Date|만료일|
 
+```bash
+curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/fridge/addItems' \
+-H 'Content-Type: application/json' \
+-d '{
+    "items": [
+        {
+            "categoryId": 9,
+            "itemDescription": "중국산 사과",
+            "itemQuantity": 1,
+            "expires": "2024-11-11T00:00:00+09:00"
+        }
+    ]
+}'
+
+```
+
 #### 응답
 **HTTP Status Code**
 
