@@ -39,8 +39,7 @@ namespace fridgeplus_server.Services
         public JsonDocument? ChatCompletion(string taskId, string prompt, object data, Type responseFormat)
         {
             _logger.LogInformation($"#{taskId}: New ChatCompletionTask.");
-
-
+            
             try
             {
                 ChatMessage[] messages =
