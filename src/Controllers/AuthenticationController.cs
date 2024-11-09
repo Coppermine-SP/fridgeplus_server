@@ -38,7 +38,7 @@ namespace fridgeplus_server.Controllers
                 return Ok();
 
             }
-            catch (InvalidJwtException _)
+            catch (InvalidJwtException)
             {
                 logger.LogInformation("Auth Failed => InvalidJwt: " + token);
                 return Unauthorized("Invalid JWT.");
