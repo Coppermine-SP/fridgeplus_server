@@ -50,6 +50,7 @@ namespace fridgeplus_server.Controllers
                     CategoryId = x.categoryId,
                     ItemDescription = x.itemDescription,
                     ItemExpireDate = x.expires,
+                    ItemQuantity = x.itemQuantity,
                     ItemImportDate = DateTime.Today,
                     ItemOwner = _getCurrentUserId()
                 });
