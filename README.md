@@ -128,7 +128,7 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/fridge/categoryList'
 |-|-|-|
 |categoryId|int|카테고리 ID|
 |categoryName|string|카테고리 한국어 이름|
-|expires|ISO-8601 Date 또는 null|권장 유효기간|
+|recommendedExpirationDays|int|권장 유효기간 일수|
 
 ```json
 {
@@ -136,37 +136,67 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/fridge/categoryList'
         {
             "categoryId": 7,
             "categoryName": "기타 신선식품",
-            "expires": null
-        },
-        {
-            "categoryId": 8,
-            "categoryName": "과일",
-            "expires": null
+            "recommendedExpirationDays": null
         },
         {
             "categoryId": 9,
-            "categoryName": "채소",
-            "expires": null
+            "categoryName": "이과류",
+            "recommendedExpirationDays": 7
         },
         {
             "categoryId": 10,
             "categoryName": "육류",
-            "expires": null
+            "recommendedExpirationDays": 2
         },
         {
             "categoryId": 11,
             "categoryName": "어류",
-            "expires": null
+            "recommendedExpirationDays": 1
         },
         {
             "categoryId": 12,
-            "categoryName": "유제품",
-            "expires": null
+            "categoryName": "유가공품",
+            "recommendedExpirationDays": 24
         },
         {
             "categoryId": 13,
             "categoryName": "반찬",
-            "expires": null
+            "recommendedExpirationDays": 7
+        },
+        {
+            "categoryId": 47,
+            "categoryName": "우유",
+            "recommendedExpirationDays": 24
+        },
+        {
+            "categoryId": 48,
+            "categoryName": "계란",
+            "recommendedExpirationDays": 21
+        },
+        {
+            "categoryId": 52,
+            "categoryName": "뿌리채소",
+            "recommendedExpirationDays": 120
+        },
+        {
+            "categoryId": 57,
+            "categoryName": "새싹채소",
+            "recommendedExpirationDays": 2
+        },
+        {
+            "categoryId": 58,
+            "categoryName": "버섯류",
+            "recommendedExpirationDays": 7
+        },
+        {
+            "categoryId": 59,
+            "categoryName": "채소",
+            "recommendedExpirationDays": 14
+        },
+        {
+            "categoryId": 60,
+            "categoryName": "과일",
+            "recommendedExpirationDays": 7
         }
     ]
 }
