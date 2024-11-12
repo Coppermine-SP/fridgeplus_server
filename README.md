@@ -347,10 +347,9 @@ curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/auth/accountInfo'
 |Key|Type|Value|
 |-|-|-|
 |sub|string|사용자 고유 ID|
-|name|string|사용자 이름|
 
 ```json
-{"sub":"101433903511515263273","name":"Coppermine"}
+{"sub":"101433903511515263273"}
 ```
 
 - - -
