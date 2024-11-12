@@ -27,7 +27,6 @@ namespace fridgeplus_server.Controllers
                 var identity = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, payload.Name),
-                    new Claim(ClaimTypes.Email, payload.Email),
                     new Claim(ClaimTypes.Sid, payload.Subject)
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
