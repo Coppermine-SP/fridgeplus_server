@@ -26,7 +26,6 @@ namespace fridgeplus_server.Controllers
 
                 var identity = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, payload.Name),
                     new Claim(ClaimTypes.Sid, payload.Subject)
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);
@@ -55,16 +54,14 @@ namespace fridgeplus_server.Controllers
             }
         }
 
-        record Account(string Sub, string Name);
+        record Account(string Sub);
 
         [HttpGet]
         [Authorize]
         public IActionResult AccountInfo()
         {
             string sid = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value ?? "null";
-            string name = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Name))?.Value ?? "null";
-
-            return new JsonResult(new Account(sid, name));
+            return new JsonResult(new Account(sid));
         }
 
         [HttpGet]
