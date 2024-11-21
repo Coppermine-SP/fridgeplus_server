@@ -3,6 +3,8 @@
     Copyright (C) 2024-2025 Coppermine-SP
  */
 
+using System.Net;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using fridgeplus_server.Context;
 using fridgeplus_server.Models;
@@ -23,10 +25,14 @@ namespace fridgeplus_server.Controllers
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
+        
+        private string _getCurrentUserId() => HttpContext.User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Sid))?.Value ?? "null";    
 
         record ReceiptImportResult(IReceiptRecognizeService.ReceiptItem[]? items);
         record ReceiptImportRequest(IReceiptRecognizeService.ReceiptItem[]? Items, Category[]? Categories);
-        record InsightResult(string Result);
+
+        record InsightRequest(Item[] items);
+        record InsightResult(string name, string description, string[] steps);
             
         [HttpPost]
         [Authorize]
@@ -65,7 +71,22 @@ namespace fridgeplus_server.Controllers
         {
             string taskId = Guid.NewGuid().ToString().Split('-')[0];
             logger.LogInformation($"#{taskId}: New Insight request.");
-            return Ok();
+
+            const string prompt = "사용자의 냉장고에 있는 식품을 기반으로 만들 수 있는 요리를 추천하세요. 추천하는 요리는 재료를 최대한 활용하며, 사용자가 쉽게 따라할 수 있도록 단계별로 조리 과정을 설명해야 합니다. 단계에는 1. 2.와 같은 첨자를 달지 마세요. 기초적인 조미료(예: 소금, 간장 등)는 추가해도 괜찮습니다.# Steps\n\n1. **재료 확인**: 냉장고 내부의 JSON 데이터를 분석하여 사용 가능한 재료를 파악합니다.\n2. **요리 결정**: 분석한 재료로 만들 수 있는 간단하고 빠른 요리를 추천합니다.\n3. **단계별 조리법 구성**: 재료가 최대한 활용될 수 있도록 간단한 조리 순서를 생각하고, 그 과정을 사용자가 이해하기 쉽게 나열합니다.\n -사용 가능한 기초 조미료를 추가할 수 있습니다.\n -단계는 순서대로 쉽게 따라할 수 있도록 명료하게 서술합니다.";
+            string uid = _getCurrentUserId();
+
+            var gptResult = chatCompletion.ChatCompletion(taskId, prompt,
+                new InsightRequest(context.Items.Where(x => x.ItemOwner == uid).OrderByDescending(x => x.ItemImportDate).Take(20).ToArray()),
+                typeof(InsightResult));
+
+            if (gptResult is null)
+            {
+                logger.LogWarning($"#{taskId}: Failed. (gptResult was null.)");
+                return BadRequest();
+            }
+            
+            logger.LogInformation($"#{taskId}: Completed.\n" + JsonSerializer.Serialize(gptResult, _serializerOptions));
+            return new JsonResult(gptResult);
         }
 
     }
