@@ -307,6 +307,24 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/fridge/addItems' \
 |-|-|-|
 |POST|api/fridge/deleteItem|true|
 
+#### 요청
+**form-data**
+|Key|Type|Value|
+|-|-|-|
+|id|int|아이템 ID|
+```bash
+curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/fridge/deleteItem' \
+-F 'id="172"'
+```
+
+#### 응답
+**HTTP Status Code**
+
+|Code|Description|
+|-|-|
+|200|삭제 성공|
+|400|삭제 실패 (권한 없음)|
+
 - - -
 
 ### 사용자 인증하기
