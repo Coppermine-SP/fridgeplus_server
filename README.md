@@ -25,7 +25,8 @@
     - [카테고리 가져오기](#카테고리-가져오기)
     - [아이템 가져오기](#아이템-가져오기)
     - [아이템 추가하기](#아이템-추가하기)
-    - [아이템 삭제하기](#아이템-삭제하기)
+    - [특정 아이템 삭제하기](#아이템-삭제하기)
+    - [모든 아이템 삭제하기](#모든-아이템-삭제하기)
 - **AuthenticationController**
   
     - [사용자 인증하기](#사용자-인증하기)
@@ -325,6 +326,26 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/fridge/deleteItem' \
 |200|삭제 성공|
 |400|삭제 실패 (권한 없음)|
 
+- - -
+
+### 모든아이템 삭제하기
+사용자의 모든 아이템을 삭제합니다.
+|Method|URL|인증|
+|-|-|-|
+|POST|api/fridge/deleteAll|true|
+
+#### 요청
+**파라미터 없음**
+```bash
+curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/fridge/deleteAll'
+```
+
+#### 응답
+**HTTP Status Code**
+
+|Code|Description|
+|-|-|
+|200|삭제 성공|
 - - -
 
 ### 사용자 인증하기
