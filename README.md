@@ -328,7 +328,7 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/fridge/deleteItem' \
 
 - - -
 
-### 모든아이템 삭제하기
+### 모든 아이템 삭제하기
 사용자의 모든 아이템을 삭제합니다.
 |Method|URL|인증|
 |-|-|-|
