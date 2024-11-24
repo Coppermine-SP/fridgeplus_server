@@ -60,13 +60,37 @@ namespace fridgeplus_server.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
-        public IActionResult DeleteItem(string id)
+        public IActionResult DeleteItem([FromForm]int id)
         {
+            string uid = _getCurrentUserId();
+
+            var target = context.Items.SingleOrDefault(x => x.ItemOwner == uid && x.ItemId == id);
+            if (target is null)
+            {
+                logger.LogInformation($"There is no item #{id} with owner {uid}!");
+                return BadRequest();
+            }
+
+            context.Items.Remove(target);
+            context.SaveChanges();
             return Ok();
         }
 
+        [HttpPost]
+        [Authorize]
+        public IActionResult DeleteAll()
+        {
+            string uid = _getCurrentUserId();
 
+            var target = context.Items.Where(x => x.ItemOwner == uid);
+
+            foreach (var x in target) context.Items.Remove(x);
+            context.SaveChanges();
+            logger.LogInformation($"Deleted all items for {uid}. ({target.Count()} records.)");
+
+            return Ok();
+        }
     }
 }
