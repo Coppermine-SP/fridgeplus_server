@@ -332,12 +332,12 @@ curl -X POST 'https://fridgeplus.dev.cloudint.corp/api/fridge/deleteItem' \
 사용자의 모든 아이템을 삭제합니다.
 |Method|URL|인증|
 |-|-|-|
-|POST|api/fridge/deleteAll|true|
+|POST|api/fridge/reset|true|
 
 #### 요청
 **파라미터 없음**
 ```bash
-curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/fridge/deleteAll'
+curl -X GET 'https://fridgeplus.dev.cloudint.corp/api/fridge/reset'
 ```
 
 #### 응답
