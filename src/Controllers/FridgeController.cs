@@ -4,13 +4,11 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices.JavaScript;
 using fridgeplus_server.Context;
 using fridgeplus_server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace fridgeplus_server.Controllers
 {
@@ -80,7 +78,7 @@ namespace fridgeplus_server.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult DeleteAll()
+        public IActionResult Reset()
         {
             string uid = _getCurrentUserId();
 
@@ -88,7 +86,7 @@ namespace fridgeplus_server.Controllers
 
             foreach (var x in target) context.Items.Remove(x);
             context.SaveChanges();
-            logger.LogInformation($"Deleted all items for {uid}. ({target.Count()} records.)");
+            logger.LogInformation($"Reset user {uid}. (deleted {target.Count()} records.)");
 
             return Ok();
         }
